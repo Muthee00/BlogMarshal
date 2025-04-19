@@ -5,6 +5,7 @@ import { prisma } from "../utils/db";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import BlogPostCard from "@/components/general/BlogPostCard";
 
+export const revalidate = 60;
 const getData = async (userId: string) => {
   const data = await prisma.blogPost.findMany({
     where: {
