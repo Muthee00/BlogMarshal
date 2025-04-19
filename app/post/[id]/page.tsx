@@ -4,30 +4,23 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import { Card, CardContent } from "@/components/ui/card";
-
-// Fix: define your expected props structure properly
-type PostPageProps = {
-  params: {
-    id: string;
-  };
-};
-
 async function getData(id: string) {
   const data = await prisma.blogPost.findUnique({
     where: {
-      id,
+      id: id as string,
     },
   });
-
   if (!data) {
     notFound();
   }
-
   return data;
 }
 
-export default async function PostPage({ params }: PostPageProps) {
-  const data = await getData(params.id);
+type Params = Promise<{ id: string }>;
+
+export default async function PostPage({ params }: { params: Params }) {
+  const { id } = await params;
+  const data = await getData(id);
 
   return (
     <div className="max-w-3xl mx-auto py-10 px-6">
@@ -64,20 +57,18 @@ export default async function PostPage({ params }: PostPageProps) {
             </p>
           </div>
         </div>
-
         <div className="relative h-[400px] w-full rounded-lg overflow-hidden border-2 border-blue-500 shadow-md mb-6">
           <Image
             src={data.imageUrl}
             alt={data.title}
             fill
-            className="object-cover"
+            className="w-full h-auto rounded-lg mb-6 shadow-md"
             priority
           />
         </div>
-
         <Card>
           <CardContent>
-            <p className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line">
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
               {data.content}
             </p>
           </CardContent>
