@@ -29,8 +29,9 @@ const BlogPostCard = ({ data }: IAppProps) => {
               src={data.imageUrl}
               alt={data.title}
               fill
-              sizes="(max-width: 640px) 100vw, 33vw"
               className="object-cover"
+              sizes="(max-width: 640px) 100vw, 33vw"
+              priority
             />
           </div>
         </Link>
@@ -41,16 +42,22 @@ const BlogPostCard = ({ data }: IAppProps) => {
           </h2>
           <p className="text-gray-300 mb-3 line-clamp-3">{data.content}</p>
           <div className="flex items-center gap-3 mt-4 justify-end">
-            <img
-              src={data.authorImage}
-              alt={data.authorName}
-              className="w-9 h-9 rounded-full border border-blue-400 object-cover"
-            />
-            <div className="text-sm text-gray-400">
+            <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-blue-500 shadow-md">
+              <Image
+                src={data.authorImage}
+                alt={data.authorName}
+                fill
+                className="object-cover"
+              />
+            </div>
+           
+            <div className="text-sm text-slate-200 flex flex-col items-start">
               <p className="font-medium">{data.authorName}</p>
-              <p className="text-xs text-gray-500">
-                {new Date(data.createdAt).toLocaleDateString()}
-              </p>
+              {new Intl.DateTimeFormat("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "2-digit",
+                }).format(new Date(data.createdAt))}
             </div>
           </div>
         </div>

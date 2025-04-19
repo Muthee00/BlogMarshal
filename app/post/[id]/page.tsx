@@ -39,10 +39,12 @@ export default async function PostPage({ params }: { params: Params }) {
         </h1>
 
         <div className="flex items-center gap-3 mb-6">
-          <img
+          <Image
             src={data.authorImage}
             alt={data.authorName}
-            className="w-10 h-10 rounded-full border border-blue-400"
+            width={40}
+            height={40}
+            className="rounded-full border border-blue-400 object-cover"
           />
           <div>
             <p className="text-sm font-medium text-gray-800 dark:text-gray-200">
@@ -57,15 +59,17 @@ export default async function PostPage({ params }: { params: Params }) {
             </p>
           </div>
         </div>
+
         <div className="relative h-[400px] w-full rounded-lg overflow-hidden border-2 border-blue-500 shadow-md mb-6">
           <Image
             src={data.imageUrl}
             alt={data.title}
             fill
-            className="w-full h-auto rounded-lg mb-6 shadow-md"
+            className="object-cover rounded-lg shadow-md"
             priority
           />
         </div>
+
         <Card>
           <CardContent>
             <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
